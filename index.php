@@ -31,6 +31,8 @@ $api = $config["vocabulary-api"];
 $hds = $config["group-handles"];
 $logo = $config["logo"];
 $logoLink = $config["logo-link"];
+$githubLogo = $config["github-logo"];
+$githubLogoLink = $config["github-logo-link"];
 $title =  $config["title"];
 $vocabularyLink = $config["vocabulary-link"];
 $vocabularyLabel = $config["vocabulary-label"];
@@ -130,8 +132,11 @@ echo <<<END
 <body>
   <div class="container">        
     <div class="d-flex justify-content-between align-items-center mt-5">
-      <h2 class="mt-5">$title</h2>	  
-      <a href="$logoLink"><img style="margin-top:48px;margin-bottom:8px;" src="$logo" height="38.391" alt="Logo"></a>
+      <h2 class="mt-0">$title</h2>
+      <div>
+	<a href="$logoLink" class="mr-2"><img style="margin-bottom:8px;" src="$logo" height="38.391" alt="Logo"></a>
+	<a href="$githubLogoLink"><img style="margin-bottom:8px;opacity:0.25;" src="$githubLogo" height="38.391" alt="Logo"></a>
+	</div>
     </div>
     $warning
     <div id="groupsList" class="list-group mt-3">

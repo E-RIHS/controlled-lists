@@ -4,6 +4,8 @@
     "title": "E-RIHS Controlled List Links",
     "logo": "graphics/E-RIHS_Logo_RGB-2.svg",
     "logo-link": "https://e-rihs.eu",
+    "github-logo": "graphics/github-mark.svg",
+    "github-logo-link": "https://github.com/E-RIHS/controlled-lists",
     "vocabulary-link": "https://vocab.e-rihs.io/",
     "vocabulary-label": "E-RIHS Vocabulary Server",
     "options": {
