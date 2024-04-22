@@ -17,7 +17,7 @@ function sortGroupsByTitle(groups) {
 }
 
 function generateGroupHTML(group) {
-
+console.log(group);
     var html = '<div class="list-group-item list-group-item-action flex-column align-items-start">';
     html += '<div class="d-flex w-100 justify-content-between align-items-center">';
     html += '<h5 class="mb-0">' + group.label + '</h5>';
@@ -49,7 +49,7 @@ function generateGroupHTML(group) {
     html += '<a href="' + group.links.simple[1] + '" class="text-decoration-none mr-2">';
     html += '<i class="fas ' + options.refresh.icon + ' lead" title="Refresh and display Simple" style="color: ' + options.simple.colour + ';"></i></a>';
     
-    html += '<a href="' + group.links.full[0] + '" class="text-decoration-none mr-2">';
+    html += '<a href="' + group.links.full[1] + '" class="text-decoration-none mr-2">';
     html += '<i class="fas ' + options.refresh.icon + ' lead" title="Refresh and display Full" style="color: ' + options.full.colour + ';"></i></a>';
 
     html += '</div></div></div>';
