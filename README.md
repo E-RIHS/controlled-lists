@@ -12,6 +12,9 @@ The landing page lists all of the current **groups** defined within the **E-RIHS
 
 The **E-RIHS Vocabulary Server** makes use of [Handle PIDs](https://en.wikipedia.org/wiki/Handle_System), if the code is pointed at a different instance of **OpenTheso System** the native IDs will be used and displayed.
 
+> [!TIP]
+> In order to speed up the use of the reforamtted data it is possible to **cache** it in a local folder called **local**. If this folder is not generated with the correct permissions the script will default to providing refreshed live data each time it is used.
+
 ### The _default_ format
 
 ```json
