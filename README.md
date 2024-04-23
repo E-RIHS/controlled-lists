@@ -1,6 +1,6 @@
 # E-RIHS Controlled List Links
 
-[E-RIHS (European Research Infrastructure for Heritage Science)](https://www.e-rihs.eu/), is an initiative that supports the research, conservation, and management of cultural heritage through advanced scientific resources and methodologies, fostering collaboration among European institutions and enhancing knowledge and preservation of heritage assets. **E-RIHS** will provide access to distributed research facilities, archives and data to advance heritage science. The [E-RIHS Knowledgebase](https://data.e-rihs.io), based on the [Cordra system](https://www.cordra.org/), capturing the key metadata describing details of the services offered under **E-RIHS** and the research work carried out through and related to these services is being developed. A key component of this work is the use of shared terms and descriptions to describe tag and group the stored information. All of these shared terms are being gathered togather within the [E-RIHS Vocabulary Server](http://vocab.e-rihs.io), based on the [OpenTheso System](https://opentheso.hypotheses.org/).
+[E-RIHS (European Research Infrastructure for Heritage Science)](https://www.e-rihs.eu/), is an initiative that supports the research, conservation, and management of cultural heritage through advanced scientific resources and methodologies, fostering collaboration among European institutions and enhancing knowledge and preservation of heritage assets. **E-RIHS** will provide access to distributed research facilities, archives and data to advance heritage science. The [E-RIHS Knowledgebase](https://data.e-rihs.io), based on the [Cordra system](https://www.cordra.org/), capturing the key metadata describing details of the services offered under **E-RIHS** and the research work carried out through and related to these services is being developed. A key component of this work is the use of shared terms and descriptions to describe tag and group the stored information. All of these shared terms are being gathered together within the [E-RIHS Vocabulary Server](http://vocab.e-rihs.io), based on the [OpenTheso System](https://opentheso.hypotheses.org/).
 
 The software presented within this repository has been put together to simplify and reformat the data that can be pulled from the [E-RIHS Vocabulary Server API](https://vocab.e-rihs.io/openapi/doc/) so that it can be easily integrated into the various schema documents used to defined all of the entities modeled with the **E-RIHS Knowledgebase**, details of these schema can also be found within the [E-RIHS Schema GitHub repository](https://github.com/E-RIHS/schema)
 
@@ -8,12 +8,12 @@ The software presented within this repository has been put together to simplify 
 
 The current live version of this script can be found at: https://hdl.handle.net/21.11158/0003-a375-bce0-4571
 
-The landing page lists all of the current **groups** defined within the **E-RIHS Vocabulary Server** and provies a series of preformatted links to access either cached or live versions of re-formatted data. Each of the groups can be viewed as **default**, **simple** and **full** formats.
+The landing page lists all of the current **groups** defined within the **E-RIHS Vocabulary Server** and provides a series of preformatted links to access either cached or live versions of re-formatted data. Each of the groups can be viewed as **default**, **simple** and **full** formats.
 
 The **E-RIHS Vocabulary Server** makes use of [Handle PIDs](https://en.wikipedia.org/wiki/Handle_System), if the code is pointed at a different instance of **OpenTheso System** the native IDs will be used and displayed.
 
 > [!TIP]
-> In order to speed up the use of the reforamtted data it is possible to **cache** it in a local folder called **local**. If this folder is not generated with the correct permissions the script will default to providing refreshed live data each time it is used.
+> In order to speed up the use of the reformatted data it is possible to **cache** it in a local folder called **local**. If this folder is not generated with the correct permissions the script will default to providing refreshed live data each time it is used.
 
 ### The _default_ format
 
