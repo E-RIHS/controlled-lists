@@ -16,83 +16,86 @@ The **E-RIHS Vocabulary Server** makes use of [Handle PIDs](https://en.wikipedia
 > In order to speed up the use of the reformatted data it is possible to **cache** it in a local folder called **local**. If this folder is not generated with the correct permissions the script will default to providing refreshed live data each time it is used.
 
 ### The _default_ format
-
+> [!TIP]
+> See live data at: https://hdl.handle.net/21.11158/0002-8d19-3829-ba66
 ```json
 {
-"id": "g8",
-"label": "offered_to",
-"created": "2024-04-22 16:12:13",
-"handle": "http://hdl.handle.net/21.11158/0002-8d19-3829-ba66",
-"list": {
-"https://hdl.handle.net/21.11158/0001-nx5l1g24rqw413kpxbcmh8jpq": "eu",
-"https://hdl.handle.net/21.11158/0001-x9p9pfsp7bqw0ftmn261fnlj1": "global",
-"https://hdl.handle.net/21.11158/0001-c2jr97fx4r0mbfswt87dk57mm": "institutional",
-"https://hdl.handle.net/21.11158/0001-1s89h4108kv7jcr33b7v0pjsd": "national"
-}
+    "id": "g8",
+    "label": "offered_to",
+    "created": "2024-04-22 16:12:13",
+    "handle": "https://hdl.handle.net/21.11158/0002-8d19-3829-ba66",
+    "list": {
+        "https://hdl.handle.net/21.11158/0001-nx5l1g24rqw413kpxbcmh8jpq": "eu",
+        "https://hdl.handle.net/21.11158/0001-x9p9pfsp7bqw0ftmn261fnlj1": "global",
+        "https://hdl.handle.net/21.11158/0001-c2jr97fx4r0mbfswt87dk57mm": "institutional",
+        "https://hdl.handle.net/21.11158/0001-1s89h4108kv7jcr33b7v0pjsd": "national"
+    }
 }
 ```
 
 ### The _simple_ format
-
+> [!TIP]
+> See live data at: https://hdl.handle.net/21.11158/0002-8d19-3829-ba66?urlappend=%26simple
 ```json
 [
-"eu",
-"global",
-"institutional",
-"national"
+    "eu",
+    "global",
+    "institutional",
+    "national"
 ]
 ```
 
 ### The _full_ format
-
+> [!TIP]
+> See live data at: https://hdl.handle.net/21.11158/0002-8d19-3829-ba66?urlappend=%26full
 ```json
 {
-"id": "g8",
-"label": "offered_to",
-"created": "2024-04-22 16:16:27",
-"handle": "http://hdl.handle.net/21.11158/0002-8d19-3829-ba66?urlappend=%26full",
-"data": {
-"https://hdl.handle.net/21.11158/0001-nx5l1g24rqw413kpxbcmh8jpq": {
-"prefLabel": "eu",
-"definition": null,
-"altLabel": [],
-"narrower": [],
-"broader": {
-"https://hdl.handle.net/21.11158/0001-jl8k2l19dbmspq5fdpb0qcdfc": "offered to"
-},
-"term_json_url": "https://vocab.e-rihs.io/openapi/v1/concept/handle/21.11158/0001-nx5l1g24rqw413kpxbcmh8jpq"
-},
-"https://hdl.handle.net/21.11158/0001-x9p9pfsp7bqw0ftmn261fnlj1": {
-"prefLabel": "global",
-"definition": null,
-"altLabel": [],
-"narrower": [],
-"broader": {
-"https://hdl.handle.net/21.11158/0001-jl8k2l19dbmspq5fdpb0qcdfc": "offered to"
-},
-"term_json_url": "https://vocab.e-rihs.io/openapi/v1/concept/handle/21.11158/0001-x9p9pfsp7bqw0ftmn261fnlj1"
-},
-"https://hdl.handle.net/21.11158/0001-c2jr97fx4r0mbfswt87dk57mm": {
-"prefLabel": "institutional",
-"definition": null,
-"altLabel": [],
-"narrower": [],
-"broader": {
-"https://hdl.handle.net/21.11158/0001-jl8k2l19dbmspq5fdpb0qcdfc": "offered to"
-},
-"term_json_url": "https://vocab.e-rihs.io/openapi/v1/concept/handle/21.11158/0001-c2jr97fx4r0mbfswt87dk57mm"
-},
-"https://hdl.handle.net/21.11158/0001-1s89h4108kv7jcr33b7v0pjsd": {
-"prefLabel": "national",
-"definition": null,
-"altLabel": [],
-"narrower": [],
-"broader": {
-"https://hdl.handle.net/21.11158/0001-jl8k2l19dbmspq5fdpb0qcdfc": "offered to"
-},
-"term_json_url": "https://vocab.e-rihs.io/openapi/v1/concept/handle/21.11158/0001-1s89h4108kv7jcr33b7v0pjsd"
-}
-}
+    "id": "g8",
+    "label": "offered_to",
+    "created": "2024-04-22 16:16:27",
+    "handle": "https://hdl.handle.net/21.11158/0002-8d19-3829-ba66?urlappend=%26full",
+    "data": {
+        "https://hdl.handle.net/21.11158/0001-nx5l1g24rqw413kpxbcmh8jpq": {
+            "prefLabel": "eu",
+            "definition": null,
+            "altLabel": [],
+            "narrower": [],
+            "broader": {
+                "https://hdl.handle.net/21.11158/0001-jl8k2l19dbmspq5fdpb0qcdfc": "offered to"
+            },
+            "term_json_url": "https://vocab.e-rihs.io/openapi/v1/concept/handle/21.11158/0001-nx5l1g24rqw413kpxbcmh8jpq"
+        },
+        "https://hdl.handle.net/21.11158/0001-x9p9pfsp7bqw0ftmn261fnlj1": {
+            "prefLabel": "global",
+            "definition": null,
+            "altLabel": [],
+            "narrower": [],
+            "broader": {
+                "https://hdl.handle.net/21.11158/0001-jl8k2l19dbmspq5fdpb0qcdfc": "offered to"
+            },
+            "term_json_url": "https://vocab.e-rihs.io/openapi/v1/concept/handle/21.11158/0001-x9p9pfsp7bqw0ftmn261fnlj1"
+        },
+        "https://hdl.handle.net/21.11158/0001-c2jr97fx4r0mbfswt87dk57mm": {
+            "prefLabel": "institutional",
+            "definition": null,
+            "altLabel": [],
+            "narrower": [],
+            "broader": {
+                "https://hdl.handle.net/21.11158/0001-jl8k2l19dbmspq5fdpb0qcdfc": "offered to"
+            },
+            "term_json_url": "https://vocab.e-rihs.io/openapi/v1/concept/handle/21.11158/0001-c2jr97fx4r0mbfswt87dk57mm"
+        },
+        "https://hdl.handle.net/21.11158/0001-1s89h4108kv7jcr33b7v0pjsd": {
+            "prefLabel": "national",
+            "definition": null,
+            "altLabel": [],
+            "narrower": [],
+            "broader": {
+                "https://hdl.handle.net/21.11158/0001-jl8k2l19dbmspq5fdpb0qcdfc": "offered to"
+            },
+            "term_json_url": "https://vocab.e-rihs.io/openapi/v1/concept/handle/21.11158/0001-1s89h4108kv7jcr33b7v0pjsd"
+        }
+    }
 }
 ```
 
