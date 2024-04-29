@@ -6,6 +6,8 @@ $defLabels = array();
 // be writable by the script.
 $localCache = checkDir();
 
+$vocabJson = array();
+
 if ($localCache)
   {$warning = "";}
 else
@@ -37,8 +39,15 @@ $title =  $config["title"];
 $vocabularyLink = $config["vocabulary-link"];
 $vocabularyLabel = $config["vocabulary-label"];
 
+// Special terms such as "other" will always be pushed to the top of 
+// lists if they have been included in the relevant group.
+list($specialID, $specialLabel, $specialUrl) = checkGroup ("g50");
+$special = array();
+
+$special = json_decode(getDefault ($specialID, $specialLabel, true, true));
+
 if ($GET_group) {
-  list($groupID, $groupLabel, $url) = checkGroup ($GET_group);
+  list($groupID, $groupLabel, $url, $groupArr) = checkGroup ($GET_group);
 
   if ($GET_refresh)
     {$url = getFull($groupID, $groupLabel, $GET_refresh);
@@ -49,7 +58,7 @@ if ($GET_group) {
   else if ($GET_full)
     {$out = getFull($groupID, $groupLabel);}
   else if ($GET_info)
-    {$out = getInfo($groupID, $groupLabel, $GET_refresh);}
+    {$out = getInfo($groupID, $groupLabel, $groupArr, $GET_refresh);}
   else
     {$out = getDefault($groupID, $groupLabel);}
   
@@ -65,50 +74,15 @@ if ($GET_group) {
   }
 else 
   {
-  $groupsUrl = $api."group/".$ths;
+  $groupsUrl = $api."group/".$ths;  
   $out = getRemoteJsonDetails($groupsUrl, true);
-    
+  
   $loptions = array_keys($options);
   sort($loptions);
   
   foreach ($out as $k => $a)
-    {
-    if(isset($hds[$a["idGroup"]]))
-      {$out[$k] = array_merge($a, $hds[$a["idGroup"]]);}
-    else
-      {
-      $out[$k]["id"] = $a["idGroup"];
-      $out[$k]["label"] = getValue ($a, "labels", "en", "title");
-      $out[$k]["handle"] = False;
-      $out[$k]["url"] = getFullURL("")."?group=".$a["idGroup"];
-      }
- 
-    foreach ($loptions as $j => $option)
-      {      
-      if (!in_array($option, array("group", "refresh")))
-        {
-        if($out[$k]["handle"])
-          {
-          if ($option == "default")
-            {$out[$k]["links"][$option][0] = $out[$k]["handle"];
-             $out[$k]["links"][$option][1] = $out[$k]["handle"]."?urlappend=%26refresh";}
-          else
-            {$out[$k]["links"][$option][0] = $out[$k]["handle"]."?urlappend=%26".$option;
-             $out[$k]["links"][$option][1] = $out[$k]["handle"]."?urlappend=%26".$option."%26refresh";}
-          }
-        else
-          {
-          if ($option == "default")
-            {$out[$k]["links"][$option][0] = $out[$k]["url"];
-             $out[$k]["links"][$option][1] = $out[$k]["url"]."?refresh";}
-          else
-            {$out[$k]["links"][$option][0] = $out[$k]["url"]."&".$option;
-             $out[$k]["links"][$option][1] = $out[$k]["url"]."&".$option."&refresh";}
-          }
-        }
-      }
-    }
-    
+    {$out[$k] = formatGroupDets ($a);}
+  
   $out = json_encode($out);
   $ops = json_encode($options);
   
@@ -193,35 +167,61 @@ function prg($exit=false, $alt=false, $noecho=false)
   else {return ($out);}
   }
 
-function getRemoteJsonDetails($uri, $decode = false, $format = false) {
-    if ($format) {
-        $uri .= "." . $format;
+function getRemoteJsonDetails($uri, $decode = false, $format = false, $maxRetries = 3, $retryDelay = 2) 
+  {
+  global $vocabJson;
+  
+  if ($format) {$uri .= "." . $format;}
+  
+  if (isset($vocabJson[$uri]))
+    {
+    //echo "<!--- Cached: $uri --->";
+    $result = $vocabJson[$uri];  
+    if ($decode) {return json_decode($result, true);}
+    else {return ($results);}    
     }
+  else
+    {
+    $attempt = 0;
+    while ($attempt < $maxRetries) {
+      //echo "<!--- Attempt [$attempt]: $uri --->";
+      
+      // Initialize cURL session
+      $ch = curl_init();
 
-    // Initialize cURL session
-    $ch = curl_init();
+      // Set cURL options
+      curl_setopt($ch, CURLOPT_URL, $uri);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($ch, CURLOPT_HEADER, false);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Ignore SSL certificate verification for simplicity
+      curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); // Ignore SSL certificate verification for simplicity
+      curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; YourAppName/1.0)'); // Optional: Set a custom user agent
 
-    // Set cURL options
-    curl_setopt($ch, CURLOPT_URL, $uri);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HEADER, false);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Ignore SSL certificate verification for simplicity
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); // Ignore SSL certificate verification for simplicity
-    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; YourAppName/1.0)'); // Optional: Set a custom user agent
+      // Execute cURL session
+      $result = curl_exec($ch);
+      $curlError = curl_errno($ch);
+      curl_close($ch);
 
-    // Execute cURL session and close it
-    $result = curl_exec($ch);
-    if (curl_errno($ch)) {
-        trigger_error('cURL Error: ' . curl_error($ch));
+      // Check if there were any errors
+      if (!$curlError) {
+        // No errors, process the response
+        $vocabJson[$uri] = $result;
+        if ($decode) {return json_decode($result, true);}
+        else {return $result;}
+        } 
+      else {
+        // There was an error, increment attempt counter
+        $attempt++;
+        if ($attempt >= $maxRetries) {
+          trigger_error('cURL Error after ' . $maxRetries . ' retries: ' . curl_error($ch));
+          return false; // Optional: Return false or handle as needed
+          }
+        // Delay before retrying
+        sleep($retryDelay);
+        }
+      }
     }
-    curl_close($ch);
-
-    // Return the result
-    if ($decode) {
-        return json_decode($result, true);
-    }
-    return $result;
-}
+  }
 
 
 function getValue ($arr, $string, $lang="en", $what="value")
@@ -284,8 +284,8 @@ function getBandN ($arr, $string)
   
 function getFull ($groupID, $groupLabel, $refresh=false)
   {
-  global $api, $ths, $defLabels, $hds, $GET_info, $localCache;
-  
+  global $api, $ths, $defLabels, $hds, $GET_info, $localCache, $special;
+ 
   // if the local cache directory is not writable always just refresh and out put the data.  
   if(!$localCache){$refresh = true;}
   
@@ -303,7 +303,7 @@ function getFull ($groupID, $groupLabel, $refresh=false)
   else {
     $terms = getRemoteJsonDetails($url, true);
     
-    $infoPath = getInfo ($groupID, $groupLabel, $refresh); //refresh this one too
+    //$infoPath = getInfo ($groupID, $groupLabel, $refresh); //refresh this one too
     $defaultJSON = getDefault ($groupID, $groupLabel, $refresh, false, $terms);    
     $defaultData = json_decode($defaultJSON, true);
     $defLabels = $defaultData["list"];
@@ -335,15 +335,25 @@ function getFull ($groupID, $groupLabel, $refresh=false)
       } 
 
     // Custom comparison function for uasort
-    uasort($data, function ($a, $b) {
-      return strcmp($a['prefLabel'], $b['prefLabel']);
-      });
+   // uasort($data, function ($a, $b) {
+   //   return strcmp($a['prefLabel'], $b['prefLabel']);
+    //  });
+    sortByKeyAndPromote($data, $special, 'prefLabel');
 
+    if (!isset ($hds[$groupID]["handle"]))
+      {$hds[$groupID]["handle"] = False;}
+    
+    if ($hds[$groupID]["handle"])
+      {$use = $hds[$groupID]["handle"]."?urlappend=%26full";}
+    else
+      {$use = $hds[$groupID]["handle"];}
+ 
     $out = array(
       "id" => "$groupID",
       "label" => "$groupLabel",
       "created" => date('Y-m-d H:i:s', time()),
-      "handle" => $hds[$groupID]["handle"]."?urlappend=%26full",
+      "handle" => $use,
+      "url" => getFullURL("")."?group=". $groupID,
       "data" => $data);
 
     $out = json_encode($out, JSON_PRETTY_PRINT);
@@ -356,7 +366,7 @@ function getFull ($groupID, $groupLabel, $refresh=false)
     }
   } 
   
-function getInfo ($groupID, $groupLabel, $refresh=false)
+function getInfo ($groupID, $groupLabel, $groupArr, $refresh=false)
   {
   global $hds, $options, $localCache;
   
@@ -371,48 +381,49 @@ function getInfo ($groupID, $groupLabel, $refresh=false)
     return ($out);
     }
   else 
-    {  
+    {
+    $gd = formatGroupDets ($groupArr);       
+      
     $out = array(
       "id" => $groupID,
       "label" => $groupLabel,      
       "created" => date('Y-m-d H:i:s', time()),
-      "handle" => $hds[$groupID]["handle"]."?urlappend=%26info",
+      "handle" =>  $gd["handle"],
+      "url" => $gd["url"]."&info",
       "links" => array()
       );
     
-    $loptions = array_keys($options);
-    sort($loptions);
-    
-    foreach ($loptions as $k => $option)
-      {
-      if ($option != "group")
-        {
-        $out["links"][$option] = $hds[$groupID]["handle"]."?urlappend=%26".$option;
-        if ($option != "refresh")
-          {$out["links"]["refresh-".$option] = $hds[$groupID]["handle"]."?urlappend=%26refresh%26".$option;}
-        }        
-      }
+    foreach ($gd["links"] as $opt => $la)
+      {$out["links"][$opt] = $la[0];
+       $out["links"]["refresh-".$opt] = $la[1];}
        
+    if ($gd["handle"])
+      {$out["links"]["refresh"] = $gd["handle"]."?urlappend=%26refresh";
+       $out["handle"] .= "?urlappend=%26info";}
+    else
+      {$out["links"]["refresh"] = $gd["url"]."&refresh";}
+    
     $out = json_encode($out, JSON_PRETTY_PRINT);
     
     // Write the JSON to the file, creating or replacing as necessary
     if ($localCache)
       {file_put_contents($infoPath, $out);}
     }
-    
+   
+  //$out["gd"] = $gd;
   return ($out);
   }
   
 function getDefault ($groupID, $groupLabel, $refresh=false, $simple=false, $terms=false)
   {
-  global $api, $ths, $hds, $localCache;
-  
+  global $api, $ths, $hds, $localCache, $special;
+    
   // if the local cache directory is not writable always just refresh and out put the data.  
   if(!$localCache){$refresh = true;}
-  
+
   // make the group label safe fora filename
   $groupLabel = simplifyFilePath($groupLabel);
-  
+
   $defaultFile = "local/".$groupID."_".$groupLabel."_default.json";
   $simpleFile = "local/".$groupID."_".$groupLabel."_simple.json";
   
@@ -442,19 +453,27 @@ function getDefault ($groupID, $groupLabel, $refresh=false, $simple=false, $term
         {$data[$tid] = $val;}
       }     
     
-    asort($data);
+    //asort($data);
+    sortAndPromote($data, $special, true);
+    
+    if (!isset ($hds[$groupID]["handle"]))
+      {$hds[$groupID]["handle"] = False;}
     
     $out = array(
       "id" => "$groupID",
       "label" => "$groupLabel",
       "created" => date('Y-m-d H:i:s', time()),
       "handle" => $hds[$groupID]["handle"],
+      "url" => getFullURL("")."?group=". $groupID,
       "list" => $data);
       
     $d_out = json_encode($out, JSON_PRETTY_PRINT);
     
-    sort($data);
-    
+    //sort($data);
+    //prg(0, array(gettype($data), gettype($special), gettype(false)));
+    //prg(0, $special);
+    sortAndPromote($data, $special, false);
+    //prg(0, $data);
     $s_out = json_encode($data, JSON_PRETTY_PRINT);
     
     // If one can, write the JSON to the file, creating or replacing as necessary
@@ -491,6 +510,7 @@ function checkGroup ($groupParam)
         if (strtolower($label["title"]) == $groupParam) {
           $groupID = $group["idGroup"];
           $groupLabel = $label["title"];
+          $groupArr = $group;
           break 2; // Exit both loops when a match is found
           }
         }
@@ -500,6 +520,7 @@ function checkGroup ($groupParam)
         if (strtolower($label["lang"]) == "en") {
           $groupLabel = $label["title"];
           $groupID = $group["idGroup"];
+          $groupArr = $group;
           break 2; // Exit both loops when a match is found
           }
         }
@@ -512,7 +533,7 @@ function checkGroup ($groupParam)
   if ($groupID and $groupLabel) {
     $url = $api."group/".$ths."/branch?idGroups=" . $groupID;}
     
-  return (array($groupID, $groupLabel, $url));
+  return (array($groupID, $groupLabel, $url, $groupArr));
   }
   
 function simplifyFilePath($string) {    
@@ -552,5 +573,115 @@ function checkDir ($directory="local")
   else
     {return(true);}
   }
+
+function sortAndPromote(array &$array, array $testArray = array(), $useAsort = true) {
+    // Step 1: Sort the array using asort (preserving keys) or sort (reindexing)
+    if ($useAsort) {
+        asort($array);
+    } else {
+        sort($array);
+    }
+
+    // Step 2: Create a temporary array to hold promoted elements
+    $promoted = [];
+
+    // Scan the array for elements that are in the test array
+    foreach ($array as $key => $value) {
+        if (in_array($value, $testArray)) {
+            // If the value is in the test array, add it to the promoted array
+            $promoted[$key] = $value;
+            // Remove from original array to avoid duplication
+            unset($array[$key]);
+        }
+    }
+
+    // Step 3: Sort the promoted array based on the order of elements in the test array
+    $sortedPromoted = [];
+    foreach ($testArray as $testVal) {
+        foreach ($promoted as $key => $val) {
+            if ($val === $testVal) {
+                $sortedPromoted[$key] = $val;
+            }
+        }
+    }
+
+    // Step 4: Merge the sorted promoted elements back to the beginning of the original array
+    if ($useAsort) {
+        $array = $sortedPromoted + $array; // '+' preserves keys
+    } else {
+        $array = array_merge($sortedPromoted, $array); // merge for reindexed arrays
+    }
+} 
+
+function sortByKeyAndPromote(array &$data, array $testArray, $key = 'prefLabel') {
+    // Create an associative array to quickly check if a value is in the test array
+    $promoteValues = array_flip($testArray);
+
+    // Define the custom sorting function
+    $sortingFunction = function($a, $b) use ($promoteValues, $key) {
+        // Check if both values are in the test array
+        $aIsPromoted = isset($promoteValues[$a[$key]]);
+        $bIsPromoted = isset($promoteValues[$b[$key]]);
+
+        if ($aIsPromoted && !$bIsPromoted) {
+            return -1; // $a should come before $b
+        } elseif (!$aIsPromoted && $bIsPromoted) {
+            return 1; // $b should come before $a
+        }
+
+        // If neither or both are promoted, sort normally
+        return strcmp($a[$key], $b[$key]);
+    };
+
+    // Apply the sorting function
+    uasort($data, $sortingFunction);
+}
+
+function formatGroupDets ($a)
+  {    
+  global $hds, $options;  
+  //prg(0, $a);
   
+  $loptions = array_keys($options);
+  sort($loptions);
+  
+  $base = array(
+    "id" => $a["idGroup"],
+    "label" => getValue ($a, "labels", "en", "title"),
+    "handle" => False,
+    "url" => getFullURL("")."?group=". $a["idGroup"]
+    );
+    
+  $out = array_merge($a, $base);
+  
+  if(isset($hds[$a["idGroup"]]))
+    {$out = array_merge($out, $hds[$a["idGroup"]]);}
+    
+  foreach ($loptions as $j => $option)
+    {      
+    if (!in_array($option, array("group", "refresh")))
+      {
+      if($out["handle"])
+        {
+        if ($option == "default")
+          {$out["links"][$option][0] = $out["handle"];
+           $out["links"][$option][1] = $out["handle"]."?urlappend=%26refresh";}
+        else
+          {$out["links"][$option][0] = $out["handle"]."?urlappend=%26".$option;
+           $out["links"][$option][1] = $out["handle"]."?urlappend=%26".$option."%26refresh";}
+        }
+      else
+        {
+        if ($option == "default")
+          {$out["links"][$option][0] = $out["url"];
+           $out["links"][$option][1] = $out["url"]."?refresh";}
+        else
+          {$out["links"][$option][0] = $out["url"]."&".$option;
+           $out["links"][$option][1] = $out["url"]."&".$option."&refresh";}
+        }
+      }
+    }
+    
+  return ($out);
+  } 
 ?>

@@ -17,7 +17,7 @@ function sortGroupsByTitle(groups) {
 }
 
 function generateGroupHTML(group) {
-console.log(group);
+
     var html = '<div class="list-group-item list-group-item-action flex-column align-items-start">';
     html += '<div class="d-flex w-100 justify-content-between align-items-center">';
     html += '<h5 class="mb-0">' + group.label + '</h5>';
