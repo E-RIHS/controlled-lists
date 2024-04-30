@@ -27,6 +27,9 @@ foreach (array_keys($options) as $k => $gv)
    if (isset($_GET[$gv]) and $gv == "group") {$$nv = $_GET[$gv];}
    else if (isset($_GET[$gv])) {$$nv = true;}
    else {$$nv =false;}}
+   
+if (isset($_GET["config"])) {$GET_config = true;}
+else {$GET_config = false;}
 
 $ths = $config["thesaurus-code"];
 $api = $config["vocabulary-api"];   
@@ -46,7 +49,17 @@ $special = array();
 
 $special = json_decode(getDefault ($specialID, $specialLabel, true, true));
 
-if ($GET_group) {
+if ($GET_config) {
+  
+  if ($GET_refresh)
+    {$groupsUrl = $api."group/".$ths;  
+     $groups = getRemoteJsonDetails($groupsUrl, true);}
+  else
+    {$groups = array();}
+    
+  checkConfig($config, $groups);
+  }
+else if ($GET_group) {
   list($groupID, $groupLabel, $url, $groupArr) = checkGroup ($GET_group);
 
   if ($GET_refresh)
@@ -99,14 +112,19 @@ echo <<<END
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>$title</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="js/cls.js"></script>
 </head>
 <body>
   <div class="container">        
     <div class="d-flex justify-content-between align-items-center mt-5">
-      <h2 class="mt-0">$title</h2>
+      <div  class="d-flex align-items-center">
+        <h2 class="mt-0">$title</h2>
+         &nbsp;-&nbsp;
+        <a href="./?config" class="text-decoration-none mr-2"><i class="fas fa-cog" title="Tool Configuation" style="color: grey;"></i></a>
+        <a href="./?config&refresh" class="text-decoration-none mr-2"><i class="fas fa-sync" title="Updated Tool Configuation" style="color: #628d5d;"></i></a>
+      </div>
       <div>
 	<a href="$logoLink" class="mr-2"><img style="margin-bottom:8px;" src="$logo" height="38.391" alt="Logo"></a>
 	<a href="$githubLogoLink"><img style="margin-bottom:8px;opacity:0.25;" src="$githubLogo" height="38.391" alt="Logo"></a>
@@ -145,6 +163,39 @@ echo <<<END
 END;
     
 }
+
+function checkConfig ($config, $groups=false)
+  {
+
+  if($groups)
+    {
+    foreach ($groups as $gid => $group)
+      {
+      if (!isset($config["group-handles"][$group["idGroup"]]))
+        {
+        $config["group-handles"][$group["idGroup"]] = array(
+          "id" => $group["idGroup"],
+          "label" => getValue ($group, "labels", "en", "title"),
+          "handle" => False,
+          "url" => getFullURL("")."?group=". $group["idGroup"]
+          );
+        }    
+      }
+   
+    $data = $config["group-handles"]; 
+    uasort($data, function ($a, $b) {
+      return strcmp($a['label'], $b['label']);
+      });
+    $config["group-handles"] = $data;
+    }
+  
+  $out = json_encode($config);
+  
+  header('Content-Type: application/json');
+  header("Access-Control-Allow-Origin: *");  
+  echo $out;  
+  exit;    
+  }
 
 function prg($exit=false, $alt=false, $noecho=false)
   {
