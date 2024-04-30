@@ -9,27 +9,27 @@
     "vocabulary-link": "https://vocab.e-rihs.io/",
     "vocabulary-label": "E-RIHS Vocabulary Server",
     "options": {
-      "group": {},
-      "refresh": {
-        "icon": "fa-sync"
+        "group": [],
+        "refresh": {
+            "icon": "fa-sync"
         },
-      "info":{
-        "icon": "fa-info",
-        "colour": "black"
+        "info": {
+            "icon": "fa-info",
+            "colour": "black"
         },
-      "default": {
-        "icon": "fa-layer-group",
-        "colour": "gray"
+        "default": {
+            "icon": "fa-layer-group",
+            "colour": "gray"
         },
-      "simple": {
-        "icon": "fa-layer-group",
-        "colour": "blue"
+        "simple": {
+            "icon": "fa-layer-group",
+            "colour": "blue"
         },
-      "full": {
-        "icon": "fa-layer-group",
-        "colour": "darkred"
+        "full": {
+            "icon": "fa-layer-group",
+            "colour": "darkred"
         }
-      },
+    },
     "tool-handle": "https://hdl.handle.net/21.11158/0003-a375-bce0-4571",
     "group-handles": {
         "g42": {
@@ -37,6 +37,12 @@
             "label": "Country",
             "handle": "https://hdl.handle.net/21.11158/0002-a36b-9f90-6c16",
             "url": "https://research.ng-london.org.uk/ecls/?group=g42"
+        },
+        "g48": {
+            "id": "g48",
+            "label": "Data Type",
+            "handle": false,
+            "url": "https://research.ng-london.org.uk/ecls/?group=g48"
         },
         "g16": {
             "id": "g16",
@@ -49,6 +55,12 @@
             "label": "E-RIHS Platform",
             "handle": "https://hdl.handle.net/21.11158/0002-ed43-cd61-6077",
             "url": "https://research.ng-london.org.uk/ecls/?group=g7"
+        },
+        "g47": {
+            "id": "g47",
+            "label": "Equipment Component Type",
+            "handle": false,
+            "url": "https://research.ng-london.org.uk/ecls/?group=g47"
         },
         "g44": {
             "id": "g44",
@@ -91,6 +103,24 @@
             "label": "Operating Language",
             "handle": "https://hdl.handle.net/21.11158/0002-9d99-a2b3-f273",
             "url": "https://research.ng-london.org.uk/ecls/?group=g13"
+        },
+        "g45": {
+            "id": "g45",
+            "label": "Organisation Type",
+            "handle": false,
+            "url": "https://research.ng-london.org.uk/ecls/?group=g45"
+        },
+        "g50": {
+            "id": "g50",
+            "label": "Other Terms",
+            "handle": false,
+            "url": "https://research.ng-london.org.uk/ecls/?group=g50"
+        },
+        "g46": {
+            "id": "g46",
+            "label": "Parameter Type",
+            "handle": false,
+            "url": "https://research.ng-london.org.uk/ecls/?group=g46"
         },
         "g14": {
             "id": "g14",
@@ -145,6 +175,12 @@
             "label": "Research Discipline",
             "handle": "https://hdl.handle.net/21.11158/0002-9dc3-7d05-b211",
             "url": "https://research.ng-london.org.uk/ecls/?group=g10"
+        },
+        "g49": {
+            "id": "g49",
+            "label": "Software Type",
+            "handle": false,
+            "url": "https://research.ng-london.org.uk/ecls/?group=g49"
         },
         "g6": {
             "id": "g6",
