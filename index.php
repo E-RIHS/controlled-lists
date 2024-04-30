@@ -31,6 +31,12 @@ foreach (array_keys($options) as $k => $gv)
 if (isset($_GET["config"])) {$GET_config = true;}
 else {$GET_config = false;}
 
+if (isset($_GET["flush"])) {
+  $message = flushCache();
+  $warning .= "<div class=\"alert alert-warning\" role=\"alert\">".
+    "$message".
+    "</div>";}
+
 $ths = $config["thesaurus-code"];
 $api = $config["vocabulary-api"];   
 $hds = $config["group-handles"];
@@ -735,4 +741,51 @@ function formatGroupDets ($a)
     
   return ($out);
   } 
+  
+function flushCache() 
+  {
+  $directory = "local";
+  $message = "";
+  
+  if (is_dir($directory)) 
+    {    
+    // Open the directory
+    $dirHandle = opendir($directory);
+      
+    // Check if the directory could not be opened
+    if ($dirHandle === false) {
+        $message .= "Failed to open the directory.<br>";
+      }
+    else
+      {
+      // Loop through all the files in the directory
+      while (($file = readdir($dirHandle)) !== false) {
+        // Construct the full path to the file
+        $filePath = $directory . '/' . $file;
+
+        // Check if the file is a JSON file
+        if (is_file($filePath) && pathinfo($file, PATHINFO_EXTENSION) == 'json') {
+            // Attempt to delete the file
+            if (unlink($filePath)) {
+                $message .= "&nbsp;&nbsp;Deleted $file<br>";
+            } else {
+                $message .= "&nbsp;&nbsp;Failed to delete $file<br>";
+            }
+          }
+        }
+	
+      if (!$message)
+	{$message.= "No local cache files where identified";}
+      else
+	{$message = "Deleting cached json files:<br>$message";}
+        
+      // Close the directory handle
+      closedir($dirHandle);
+      }    
+    }
+  else
+    {$message .= "No local cache directory was found, so there are no cached files to delete.";} 
+  
+  return ($message);
+  }
 ?>
