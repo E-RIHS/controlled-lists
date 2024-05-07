@@ -41,7 +41,7 @@
         "g48": {
             "id": "g48",
             "label": "Data Type",
-            "handle": "21.11158/0002-26d8-bbc2-fbb1",
+            "handle": "https://hdl.handle.net/21.11158/0002-26d8-bbc2-fbb1",
             "url": "https://research.ng-london.org.uk/ecls/?group=g48"
         },
         "g16": {
@@ -59,7 +59,7 @@
         "g47": {
             "id": "g47",
             "label": "Equipment Component Type",
-            "handle": "http://hdl.handle.net/21.11158/0002-9e36-d532-ac26",
+            "handle": "https://hdl.handle.net/21.11158/0002-9e36-d532-ac26",
             "url": "https://research.ng-london.org.uk/ecls/?group=g47"
         },
         "g44": {
@@ -107,19 +107,19 @@
         "g45": {
             "id": "g45",
             "label": "Organisation Type",
-            "handle": "http://hdl.handle.net/21.11158/0002-e5a2-1fbd-dc53",
+            "handle": "https://hdl.handle.net/21.11158/0002-e5a2-1fbd-dc53",
             "url": "https://research.ng-london.org.uk/ecls/?group=g45"
         },
         "g50": {
             "id": "g50",
             "label": "Other Terms",
-            "handle": "http://hdl.handle.net/21.11158/0002-f909-4276-6fee",
+            "handle": "https://hdl.handle.net/21.11158/0002-f909-4276-6fee",
             "url": "https://research.ng-london.org.uk/ecls/?group=g50"
         },
         "g46": {
             "id": "g46",
             "label": "Parameter Type",
-            "handle": "http://hdl.handle.net/21.11158/0002-c5b7-844b-90a8",
+            "handle": "https://hdl.handle.net/21.11158/0002-c5b7-844b-90a8",
             "url": "https://research.ng-london.org.uk/ecls/?group=g46"
         },
         "g14": {
@@ -179,7 +179,7 @@
         "g49": {
             "id": "g49",
             "label": "Software Type",
-            "handle": "http://hdl.handle.net/21.11158/0002-e206-8155-4ff4",
+            "handle": "https://hdl.handle.net/21.11158/0002-e206-8155-4ff4",
             "url": "https://research.ng-london.org.uk/ecls/?group=g49"
         },
         "g6": {
