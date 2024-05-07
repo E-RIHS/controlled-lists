@@ -10,28 +10,26 @@
     "vocabulary-label": "E-RIHS Vocabulary Server",
     "options": {
         "group": [],
-        "refresh": {
-            "icon": "fa-sync"
-        },
-        "info": {
-            "icon": "fa-info",
-            "colour": "black"
-        },
-        "default": {
-            "icon": "fa-layer-group",
-            "colour": "gray"
-        },
-        "simple": {
-            "icon": "fa-layer-group",
-            "colour": "blue"
-        },
-        "full": {
-            "icon": "fa-layer-group",
-            "colour": "darkred"
-        }
+        "refresh": { "icon": "fa-sync" },
+        "info": { "icon": "fa-info", "colour": "black" },
+        "default": { "icon": "fa-layer-group", "colour": "gray" },
+        "simple": { "icon": "fa-layer-group", "colour": "blue" },
+        "full": { "icon": "fa-layer-group", "colour": "darkred" }
     },
     "tool-handle": "https://hdl.handle.net/21.11158/0003-a375-bce0-4571",
     "group-handles": {
+        "g51": {
+            "id": "g51",
+            "label": "Acquisition Area",
+            "handle": "https://hdl.handle.net/21.11158/0002-389e-a0cd-0640",
+            "url": "https://research.ng-london.org.uk/ecls/?group=g51"
+        },
+        "g53": {
+            "id": "g53",
+            "label": "Component Type",
+            "handle": "https://hdl.handle.net/21.11158/0002-7253-5fd9-8cb8",
+            "url": "https://research.ng-london.org.uk/ecls/?group=g53"
+        },
         "g42": {
             "id": "g42",
             "label": "Country",
@@ -121,6 +119,12 @@
             "label": "Parameter Type",
             "handle": "https://hdl.handle.net/21.11158/0002-c5b7-844b-90a8",
             "url": "https://research.ng-london.org.uk/ecls/?group=g46"
+        },
+        "g52": {
+            "id": "g52",
+            "label": "Parameter Unit",
+            "handle": "https://hdl.handle.net/21.11158/0002-8d5b-ecd3-0785",
+            "url": "https://research.ng-london.org.uk/ecls/?group=g52"
         },
         "g14": {
             "id": "g14",
