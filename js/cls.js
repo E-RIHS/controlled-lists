@@ -17,8 +17,17 @@ function sortGroupsByTitle(groups) {
 }
 
 function generateGroupHTML(group) {
-
-    var html = '<div class="list-group-item list-group-item-action flex-column align-items-start">';
+    console.log(group.handle);
+    
+    if (group.handle) {
+      warning = false; // Code to execute if the condition is true
+      warning_label = false;
+      }
+    else {
+      warning = "list-group-item-warning "; // Code to execute if the condition is false
+      warning_label = " title = 'No handle has been assigned to this group yet.' ";
+      }
+    var html = '<div class="list-group-item ' + warning + 'list-group-item-action flex-column align-items-start"' +warning_label +'>';
     html += '<div class="d-flex w-100 justify-content-between align-items-center">';
     html += '<h5 class="mb-0">' + group.label + '</h5>';
     html += '<div>';
