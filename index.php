@@ -19,6 +19,11 @@ else
   
 $config_path = getFullURL("config.json");  
 $config = getRemoteJsonDetails($config_path, true);
+
+// Can be used to ignore handles and test local links for debugging
+//if (true)
+//  {$config = forceLocalurls($config);}
+
 $options = $config["options"];
 
 foreach (array_keys($options) as $k => $gv)
@@ -64,6 +69,11 @@ if ($GET_config) {
     {$groups = array();}
     
   checkConfig($config, $groups);
+  }
+else if (isset($_GET["view"]))
+  {
+  buildtree($GET_group);
+  exit;  
   }
 else if ($GET_group) {
   list($groupID, $groupLabel, $url, $groupArr) = checkGroup ($GET_group);
@@ -128,8 +138,8 @@ echo <<<END
       <div  class="d-flex align-items-center">
         <h2 class="mt-0">$title</h2>
          &nbsp;-&nbsp;
-        <a href="./?config" class="text-decoration-none mr-2"><i class="fas fa-cog" title="Tool Configuation" style="color: grey;"></i></a>
-        <a href="./?config&refresh" class="text-decoration-none mr-2"><i class="fas fa-sync" title="Updated Tool Configuation" style="color: #628d5d;"></i></a>
+        <!--- <a href="./?config" class="text-decoration-none mr-2"><i class="fas fa-cog" title="Tool Configuation" style="color: grey;"></i></a> --->
+        <a href="./?config&refresh" class="text-decoration-none mr-2"><i class="fas fa-cog" title="Current Tool Configuation" style="color: #628d5d;"></i></a>
       </div>
       <div>
 	<a href="$logoLink" class="mr-2"><img style="margin-bottom:8px;" src="$logo" height="38.391" alt="Logo"></a>
@@ -287,6 +297,7 @@ function getValue ($arr, $string, $lang="en", $what="value")
 
   if (isset($arr[$string])) {
     foreach ($arr[$string] as $val) {
+      if (!isset($val["lang"])) {$val["lang"] = False;}
       if ($val["lang"] == $lang) {
         $value = $val[$what];
         break; // Exit the loop when an English label is found
@@ -368,12 +379,15 @@ function getFull ($groupID, $groupLabel, $refresh=false)
     $data = array();
 
     foreach ($terms as $tid=> $term) {
-      $row = array();                 
+      $row = array();
+      $type = getValue ($term, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type");                 
       $row["prefLabel"] = getValue ($term, "http://www.w3.org/2004/02/skos/core#prefLabel");      
       
-      if (substr($row["prefLabel"], 0, 1) === '<' && substr($row["prefLabel"], -1) === '>') {
+      if ((substr($row["prefLabel"], 0, 1) === '<' && substr($row["prefLabel"], -1) === '>') or
+	($type != "http://www.w3.org/2004/02/skos/core#Concept")) {
         //skip grouping terms in AAT
-        }
+	//skip non concepts added to groups by OpenTheso
+	}
       else
         {
         $row["definition"] = getValue ($term, "http://www.w3.org/2004/02/skos/core#definition");            
@@ -502,9 +516,12 @@ function getDefault ($groupID, $groupLabel, $refresh=false, $simple=false, $term
     $data = array();
 
     foreach ($terms as $tid=> $term) {
+      $type = getValue ($term, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
       $val = getValue ($term, "http://www.w3.org/2004/02/skos/core#prefLabel");
-      if (substr($val, 0, 1) === '<' && substr($val, -1) === '>') {
+      if ((substr($val, 0, 1) === '<' && substr($val, -1) === '>') or
+	($type != "http://www.w3.org/2004/02/skos/core#Concept")){
         //skip grouping terms in AAT
+	//skip non concepts added to groups by OpenTheso
         }
       else
         {$data[$tid] = $val;}
@@ -601,7 +618,7 @@ function simplifyFilePath($string) {
     return $string;
 }
 
-function getFullURL($relativePath) {
+function getFullURL($relativePath="") {
 
     // Check if HTTP or HTTPS
     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http';
@@ -787,5 +804,248 @@ function flushCache()
     {$message .= "No local cache directory was found, so there are no cached files to delete.";} 
   
   return ($message);
+  }
+
+function buildTreeData($nodes, $links) {
+   
+    // Create an associative array to hold the node details
+    $treeNodes = [];
+    foreach ($nodes as $id => $label) {
+        $treeNodes[$id] = [
+            'name' => $label,
+            'children' => []
+        ];
+    }
+
+    // Identify the root node (a node that is never a target)
+    $allTargets = array_column($links, 1);
+    $rootNodeId = null;
+    foreach ($nodes as $id => $label) {
+        if (!in_array($id, $allTargets)) {
+            $rootNodeId = $id;
+            break;
+        }
+    }
+
+    // If no root node is found, return an empty array or handle as needed
+    if ($rootNodeId === null) {
+        return []; // or handle this case appropriately
+    }
+
+    // Build the tree by linking nodes according to $links
+    foreach ($links as $link) {
+        $sourceId = $link[0];
+        $targetId = $link[1];
+        if (isset($treeNodes[$sourceId]) && isset($treeNodes[$targetId])) {
+            $treeNodes[$sourceId]['children'][] = &$treeNodes[$targetId];
+        }
+    }
+
+    // Return the tree from the root node
+    return $treeNodes[$rootNodeId];
+}
+
+function forceLocalurls ($config)
+  {
+  $page = getFullURL();
+  
+  foreach ($config["group-handles"] as $gid => $a)
+    {$a["handle"] = false;
+     $pi = pathinfo($a["url"]);
+     $a["url"] = $page.$pi["basename"];
+     $config["group-handles"][$gid] = $a;}
+    
+  return ($config);  
+  }
+  
+function buildtree($group)
+  {
+  list($groupID, $groupLabel, $url, $groupArr) = checkGroup ($group);
+  
+  $default = getFull($groupID, $groupLabel);
+  $default = json_decode($default, true);
+  
+  $nodes = array();
+  $links = array();
+  
+  $maxlabellength = 0;
+  
+  foreach ($default["data"] as $hid => $a)
+    {
+    if (strlen($a["prefLabel"]) > $maxlabellength) {$maxlabellength = strlen($a["prefLabel"]);}
+    if (!isset($nodes[$hid])) {$nodes[$hid] = $a["prefLabel"];}
+    }
+
+
+  foreach ($default["data"] as $hid => $a)
+    {
+    if (!$a["narrower"] and !$a["broader"])
+      {$links["$groupID - $hid"] = array($groupID, $hid);}
+      
+    foreach ($a["narrower"] as $nid => $nl)
+      {
+      if (!isset($nodes[$nid])) {$nodes[$nid] = $nl;}
+      if (!isset($links["$hid - $nid"])) {
+	$links["$hid - $nid"] = array($hid, $nid);}
+      }
+      
+    foreach ($a["broader"] as $bid => $bl)
+      {
+      if (!isset($nodes[$bid])) 
+	{$links["$groupID - $hid"] = array($groupID, $hid);}
+      else if (!isset($links["$bid - $hid"])) {
+	$links["$bid - $hid"] = array($bid, $hid);}
+      }
+    }
+
+  $nodes[$groupID] = $groupLabel;
+
+  $data = buildTreeData($nodes, $links);
+  $jsData = json_encode($data);
+  $page = getFullURL("");
+  $hwidth = $maxlabellength * 7;
+
+  echo <<<END
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tree Layout with Navigation Controls</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        svg {
+            width: 100%;
+            height: 100vh;
+            border: 1px solid #ccc;
+        }
+        .node circle {
+            fill: steelblue;
+            stroke: steelblue;
+            stroke-width: 3px;
+        }
+        .node text {
+            font: 12px sans-serif;
+        }
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 2px;
+        }
+        #navigation {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .button {
+            padding: 5px 10px;
+            text-align: center;
+            background: #ddd;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="navigation">
+        <div class="button" onclick="resetZoom()">Home</div>
+        <div class="button" onclick="goBack()">Back</div>
+    </div>
+    <div id="tree-container"></div>
+    <script>
+        const margin = { top: 20, right: 120, bottom: 20, left: 120 };
+        const width = 960 - margin.left - margin.right;
+        const height = 800 - margin.top - margin.bottom;
+        const zoom = d3.zoom().scaleExtent([0.1, 10]).on("zoom", (event) => {
+          svgGroup.attr("transform", event.transform);
+          });
+  
+        const svg = d3.select("#tree-container").append("svg")
+            .attr("viewBox", `0 0 \${width + margin.left + margin.right} \${height + margin.top + margin.bottom}`)
+            .style("background-color", "white")
+            .call(zoom)
+            .append("g")
+            .attr("transform", `translate(\${margin.left}, \${margin.top})`);
+
+        const svgGroup = svg.append("g");
+
+        const treeData = $jsData;
+
+        const root = d3.hierarchy(treeData);
+        const tree = d3.tree().nodeSize([25, $hwidth]); // Custom node size for compact layout
+        update(root);
+
+        function update(source) {
+            tree(root);
+
+            let minX = Infinity;
+            let minY = Infinity;
+            root.each(node => {
+                if (node.y < minY) {
+                    minX = node.x;
+                    minY = node.y;
+                }
+            });
+            const offsetY = height / 2 - minX;
+
+            const nodes = root.descendants().reverse();
+            const links = root.links();
+
+            svgGroup.selectAll('g.node').remove();
+            svgGroup.selectAll('path.link').remove();
+
+            const node = svgGroup.selectAll('g.node')
+                .data(nodes, d => d.id || (d.id = ++d.depth));
+
+            const nodeEnter = node.enter().append('g')
+                .attr('class', 'node')
+                .attr("transform", d => `translate(\${d.y},\${d.x + offsetY})`);
+
+            nodeEnter.append('circle')
+                .attr('r', 5)
+                .attr('class', 'node');
+
+            nodeEnter.append('text')
+                .attr("dy", "0.35em")
+                .attr("x", d => d.children || d._children ? -10 : 10)
+                .attr("text-anchor", d => d.children || d._children ? "end" : "start")
+                .text(d => d.data.name);
+
+            const link = svgGroup.selectAll('path.link')
+                .data(links, d => d.target.id);
+
+            link.enter().insert('path', "g")
+                .attr("class", "link")
+                .attr('d', d => d3.linkHorizontal()({
+                    source: [d.source.y, d.source.x + offsetY],
+                    target: [d.target.y, d.target.x + offsetY]
+                }));
+        }
+
+        function resetZoom() {
+          const zoomTransform = d3.zoomTransform(svg.node());
+          const newZoomTransform = d3.zoomIdentity.translate(margin.left, margin.top);
+          svg.transition().duration(750).call(
+            zoom.transform,
+            newZoomTransform,
+          zoomTransform
+          );
+          }
+
+        function goBack() {
+            window.location.href = "$page"; // Replace with your URL
+        }
+    </script>
+</body>
+</html>
+END;
   }
 ?>

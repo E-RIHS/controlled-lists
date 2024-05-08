@@ -11,6 +11,7 @@
     "options": {
         "group": [],
         "refresh": { "icon": "fa-sync" },
+        "view": { "icon": "fa-eye", "colour": "lightgray" },
         "info": { "icon": "fa-info", "colour": "black" },
         "default": { "icon": "fa-layer-group", "colour": "gray" },
         "simple": { "icon": "fa-layer-group", "colour": "blue" },

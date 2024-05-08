@@ -33,6 +33,12 @@ function generateGroupHTML(group) {
     html += '<div>';
 
     // Info
+    html += '<a href="' + group.links.view[0] + '" class="text-decoration-none mr-2">';
+    html += '<i class="fas ' + options.view.icon + ' lead" title="View Group Diagram" style="color: ' + options.view.colour + ';"></i></a>';
+    
+    html += '&nbsp;-&nbsp;&nbsp;';
+    
+    // Info
     html += '<a href="' + group.links.info[0] + '" class="text-decoration-none mr-2">';
     html += '<i class="fas ' + options.info.icon + ' lead" title="Group Information" style="color: ' + options.info.colour + ';"></i></a>';
     
