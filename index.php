@@ -70,7 +70,14 @@ if ($GET_config) {
     
   checkConfig($config, $groups);
   }
-else if (isset($_GET["view"]))
+else if (isset($_GET["vocab"]) and $GET_group)
+  {
+  list($groupID, $groupLabel, $url, $groupArr) = checkGroup ($GET_group);
+  $vocabURL = $vocabularyLink."?idg=$groupID&idt=$ths";
+  header( sprintf( "Location: $vocabURL" ) );
+  exit;  
+  }
+else if (isset($_GET["view"]) and $GET_group)
   {
   buildtree($GET_group);
   exit;  
