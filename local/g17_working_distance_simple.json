@@ -1,7 +1,0 @@
-[
-    "direct-contact",
-    "near-contact (< 0.01 m)",
-    "close-range (0.01 - 0.1 m)",
-    "short-distance (0.1 - 10 m)",
-    "remote (> 10 m)"
-]
