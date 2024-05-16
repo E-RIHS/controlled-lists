@@ -57,7 +57,6 @@ $vocabularyLabel = $config["vocabulary-label"];
 // lists if they have been included in the relevant group.
 list($specialID, $specialLabel, $specialUrl) = checkGroup ("g50");
 $special = array();
-
 $special = json_decode(getDefault ($specialID, $specialLabel, true, true));
 
 if ($GET_config) {
@@ -88,7 +87,7 @@ else if ($GET_group) {
   if ($GET_refresh)
     {$url = getFull($groupID, $groupLabel, $GET_refresh);
      $GET_refresh = false;}
-    
+
   if ($GET_simple)
     {$out = getDefault($groupID, $groupLabel, False, True);}
   else if ($GET_full)
@@ -378,23 +377,26 @@ function getFull ($groupID, $groupLabel, $refresh=false)
   else {
     $terms = getRemoteJsonDetails($url, true);
     
-    //$infoPath = getInfo ($groupID, $groupLabel, $refresh); //refresh this one too
     $defaultJSON = getDefault ($groupID, $groupLabel, $refresh, false, $terms);    
     $defaultData = json_decode($defaultJSON, true);
     $defLabels = $defaultData["list"];
     
     $data = array();
+    $orderByNotation = true;
+    $orBy = array();
 
     foreach ($terms as $tid=> $term) {
       $row = array();
-      $type = getValue ($term, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type");                 
+      $type = getValue ($term, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
+      $row["notation"] = getValue ($term, "http://www.w3.org/2004/02/skos/core#notation");
+      if (!$row["notation"]) {$orderByNotation = false;}                 
       $row["prefLabel"] = getValue ($term, "http://www.w3.org/2004/02/skos/core#prefLabel");      
       
       if ((substr($row["prefLabel"], 0, 1) === '<' && substr($row["prefLabel"], -1) === '>') or
-	($type != "http://www.w3.org/2004/02/skos/core#Concept")) {
+        ($type != "http://www.w3.org/2004/02/skos/core#Concept")) {
         //skip grouping terms in AAT
-	//skip non concepts added to groups by OpenTheso
-	}
+        //skip non concepts added to groups by OpenTheso
+        }
       else
         {
         $row["definition"] = getValue ($term, "http://www.w3.org/2004/02/skos/core#definition");            
@@ -416,7 +418,10 @@ function getFull ($groupID, $groupLabel, $refresh=false)
    // uasort($data, function ($a, $b) {
    //   return strcmp($a['prefLabel'], $b['prefLabel']);
     //  });
-    sortByKeyAndPromote($data, $special, 'prefLabel');
+    if ($orderByNotation) {
+      sortByKeyAndPromote($data, $special, 'notation');}
+    else {
+      sortByKeyAndPromote($data, $special, 'prefLabel');}
 
     if (!isset ($hds[$groupID]["handle"]))
       {$hds[$groupID]["handle"] = False;}
@@ -493,7 +498,7 @@ function getInfo ($groupID, $groupLabel, $groupArr, $refresh=false)
   }
   
 function getDefault ($groupID, $groupLabel, $refresh=false, $simple=false, $terms=false)
-  {
+  {  
   global $api, $ths, $hds, $localCache, $special;
     
   // if the local cache directory is not writable always just refresh and out put the data.  
@@ -521,21 +526,28 @@ function getDefault ($groupID, $groupLabel, $refresh=false, $simple=false, $term
       {$terms = getRemoteJsonDetails($url, true);}
       
     $data = array();
-
+    $orderByNotation = true;
+    $orBy = array();
+    //if ($groupID != "g50") {prg(1, $terms);}
+    
     foreach ($terms as $tid=> $term) {
       $type = getValue ($term, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
       $val = getValue ($term, "http://www.w3.org/2004/02/skos/core#prefLabel");
+      $notation = getValue ($term, "http://www.w3.org/2004/02/skos/core#notation");      
+      if (!$notation) {$orderByNotation = false;}
+      
       if ((substr($val, 0, 1) === '<' && substr($val, -1) === '>') or
-	($type != "http://www.w3.org/2004/02/skos/core#Concept")){
+        ($type != "http://www.w3.org/2004/02/skos/core#Concept")){
         //skip grouping terms in AAT
-	//skip non concepts added to groups by OpenTheso
+        //skip non concepts added to groups by OpenTheso
         }
       else
-        {$data[$tid] = $val;}
+        {$orBy[$tid] = $notation;
+         $data[$tid] = $val;}
       }     
     
-    //asort($data);
-    sortAndPromote($data, $special, true);
+    if (!$orderByNotation) {$orBy = array();}
+    sortAndPromote($data, $special, $orBy, true);
     
     if (!isset ($hds[$groupID]["handle"]))
       {$hds[$groupID]["handle"] = False;}
@@ -550,12 +562,8 @@ function getDefault ($groupID, $groupLabel, $refresh=false, $simple=false, $term
       
     $d_out = json_encode($out, JSON_PRETTY_PRINT);
     
-    //sort($data);
-    //prg(0, array(gettype($data), gettype($special), gettype(false)));
-    //prg(0, $special);
-    sortAndPromote($data, $special, false);
-    //prg(0, $data);
-    $s_out = json_encode($data, JSON_PRETTY_PRINT);
+    $data_values = array_values($data);
+    $s_out = json_encode($data_values, JSON_PRETTY_PRINT);
     
     // If one can, write the JSON to the file, creating or replacing as necessary
     if ($localCache)
@@ -655,9 +663,29 @@ function checkDir ($directory="local")
     {return(true);}
   }
 
-function sortAndPromote(array &$array, array $testArray = array(), $useAsort = true) {
+function reorderBasedOnValues($A, $B) {
+    // Create an array of keys sorted by the values in B
+    $keys = array_keys($B);
+    usort($keys, function($a, $b) use ($B) {
+        return $B[$a] <=> $B[$b];
+    });
+
+    // Reorder A based on the sorted keys
+    $reorderedA = [];
+    foreach ($keys as $key) {
+        $reorderedA[$key] = $A[$key];
+    }
+
+    return $reorderedA;
+}
+
+function sortAndPromote(array &$array, array $testArray = array(), $sortBy=array(), $useAsort = true) 
+  {  
+
     // Step 1: Sort the array using asort (preserving keys) or sort (reindexing)
-    if ($useAsort) {
+    if ($sortBy)
+      {$array = reorderBasedOnValues($array, $sortBy);}
+    else if ($useAsort) {
         asort($array);
     } else {
         sort($array);

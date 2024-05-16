@@ -1,0 +1,14 @@
+{
+    "id": "g17",
+    "label": "working_distance",
+    "created": "2024-05-17 00:01:36",
+    "handle": "https:\/\/hdl.handle.net\/21.11158\/0002-b867-f3d1-b5bd",
+    "url": "http:\/\/localhost\/cls\/?group=g17",
+    "list": {
+        "https:\/\/hdl.handle.net\/21.11158\/0001-6lkr0q97v4rqpghv3xnbkvpkm": "direct-contact",
+        "https:\/\/hdl.handle.net\/21.11158\/0001-p1h6cvt46ljtdssmfs0jwcxfd": "near-contact (< 0.01 m)",
+        "https:\/\/hdl.handle.net\/21.11158\/0001-tvgg6bb779m5rql22w0c754sf": "close-range (0.01 - 0.1 m)",
+        "https:\/\/hdl.handle.net\/21.11158\/0001-86n5x4v6pjdn12rh6mvf31s2t": "short-distance (0.1 - 10 m)",
+        "https:\/\/hdl.handle.net\/21.11158\/0001-njqx4jgpptx7dltv4kxvlwt21": "remote (> 10 m)"
+    }
+}
