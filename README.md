@@ -104,7 +104,7 @@ The **E-RIHS Vocabulary Server** makes use of [Handle PIDs](https://en.wikipedia
 This project was developed and tested as part of the work of the following projects:
 
 ### The H2020 [IPERION-HS](https://www.iperionhs.eu/) project
-[<img height="64px" src="https://github.com/jpadfield/simple-modelling/blob/master/docs/graphics/IPERION-HS%20Logo.png" alt="IPERION-HS">](https://www.iperionhs.eu/)
+[<img height="64px" src="https://e-rihs.io/graphics/IPERION-HS%20Logo.png" alt="IPERION-HS">](https://www.iperionhs.eu/)
 ###### [IPERION-HS has received funding from the European Union’s Horizon 2020 call H2020-INFRAIA-2019-1, under GA 871034](https://cordis.europa.eu/project/id/871034)
 ### The Horizon Europe [E-RIHS IP](https://www.e-rihs.eu/the-project/) project
 [<img height="64px" src="https://e-rihs.io/graphics/e-rihs-eric-logo_ai.png" alt="E-RIHS IP Logo">](https://www.iperionhs.eu/)<br/>
