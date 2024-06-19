@@ -390,7 +390,7 @@ function getFull ($groupID, $groupLabel, $refresh=false)
       $type = getValue ($term, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
       $row["notation"] = getValue ($term, "http://www.w3.org/2004/02/skos/core#notation");
       if (!$row["notation"]) {$orderByNotation = false;}                 
-      $row["prefLabel"] = getValue ($term, "http://www.w3.org/2004/02/skos/core#prefLabel");      
+      $row["prefLabel"] = strtolower(getValue ($term, "http://www.w3.org/2004/02/skos/core#prefLabel"));      
       
       if ((substr($row["prefLabel"], 0, 1) === '<' && substr($row["prefLabel"], -1) === '>') or
         ($type != "http://www.w3.org/2004/02/skos/core#Concept")) {
@@ -543,7 +543,7 @@ function getDefault ($groupID, $groupLabel, $refresh=false, $simple=false, $term
         }
       else
         {$orBy[$tid] = $notation;
-         $data[$tid] = $val;}
+         $data[$tid] = strtolower($val);}
       }     
     
     if (!$orderByNotation) {$orBy = array();}
