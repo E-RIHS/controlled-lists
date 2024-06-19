@@ -127,41 +127,106 @@ else
   $dateString = date("Y-m-d", $lastModified);
 
 echo <<<END
+  
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$title</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="js/cls.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="./graphics/favicon.png">
+  <title>$title</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="js/cls.js"></script>
+  <style>
+    html, body {
+      height: 100%;
+    }
+    .container-custom {
+      max-width: 1200px;
+      min-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      border-top: 2px dotted #dee2e6;  /* Dotted line at the top */
+      border-bottom: 2px dotted #dee2e6;  /* Dotted line at the bottom */
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">        
-    <div class="d-flex justify-content-between align-items-center mt-5">
-      <div  class="d-flex align-items-center">
-        <h2 class="mt-0">$title</h2>
-         &nbsp;-&nbsp;
-        <!--- <a href="./?config" class="text-decoration-none mr-2"><i class="fas fa-cog" title="Tool Configuation" style="color: grey;"></i></a> --->
-        <a href="./?config&refresh" class="text-decoration-none mr-2"><i class="fas fa-cog" title="Current Tool Configuation" style="color: #628d5d;"></i></a>
+  <div class="container-custom">
+    <!-- Header Section -->
+    <header class="d-flex justify-content-between align-items-center py-3">
+      <div class="d-flex align-items-center">
+      <a href="$logoLink" class="me-3"><img src="$logo" alt="Logo" style="height:38.391px;"></a>
+      <h3 class="mt-2">$title</h3>
       </div>
       <div>
-	<a href="$logoLink" class="mr-2"><img style="margin-bottom:8px;" src="$logo" height="38.391" alt="Logo"></a>
-	<a href="$githubLogoLink"><img style="margin-bottom:8px;opacity:0.25;" src="$githubLogo" height="38.391" alt="Logo"></a>
-	</div>
+        <a href="./?config&refresh" class="text-decoration-none mr-2"><i class="fas fa-cog" title="Current Tool Configuration" style="color: #628d5d;"></i></a>
+      </div>
+    </header>
+$warning
+    <!-- Content Section -->
+    <main class="content">
+      <div id="groupsList" class="list-group pt-1 pb-1">
+	<!-- Group links will be injected here -->     
+      </div>
+    </main>
+
+    <!-- Footer Section -->
+    
+    
+      
+    <footer class="footer py-3">
+      <div class="row w-100">
+       <div class="col d-flex justify-content-start">
+      
+      <div style="font-size:0.75rem; padding:0.5rem;">
+	<p>All terms referenced from the <a class="" style="color: black;" href="$vocabularyLink">$vocabularyLabel</a></p>
+	<p>Last updated $dateString</p>
     </div>
-    $warning
-    <div id="groupsList" class="list-group mt-3">
-      <!-- Group links will be injected here -->
-    </div>
-    <div class="d-flex justify-content-between align-items-center">
-      <h5 class="mb-0 pl-2 pt-1"  style="color: lightgray;">All terms referenced from the <a class="" style="color: lightgray;" href="$vocabularyLink">$vocabularyLabel</a></h5>
-      <h5 class="mb-0 pr-2 pt-1"  style="color: lightgray;">$dateString</h5>
-    </div>
+      
+      
+      
+
+      </div>
+      <div class="col d-flex justify-content-end">
+      <table class="table table-borderless">
+  <tbody>
+    <tr>
+      <td style="font-size:0.75rem;">E-RIHS IP has received funding from the European Union’s Horizon Europe call HORIZON-INFRA-2021-DEV-02, Grant Agreement n.101079148. </td>
+      <td></td>
+      <td><a href="https://doi.org/10.3030/101079148" target="_blank"><img src="./graphics/eu-fundedby-logo-B6sKkV8V.png" alt="Funded by EU" class="object-contain object-left" style="height:1.75rem;"></a></td>
+    </tr>
+    <tr>
+      <td style="font-size:0.75rem;">Developed by Joe Padfield / National Gallery (London) for E-RIHS</td>
+      <td></td>
+      <td><a href="https://www.nationalgallery.org.uk" target="_blank"><img src="./graphics/NG Logo.png" alt="The National Gallery" class="object-contain object-left" style="height:1.75rem;"></a></td>
+    </tr>
+    <tr>
+      <td style="font-size:0.75rem;">Source code available on GitHub under the MIT License</td>
+      <td></td>
+      <td><a href="https://github.com/E-RIHS/controlled-lists" target="_blank"><img src="./graphics/github-mark.svg" alt="GitHub" class="object-contain object-left" style="height:1.75rem;"></a></td>
+    </tr>
+  </tbody>
+</table>
+      </div>
+      </div>
+    </footer>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
   <script>
   
   var optionsData = '$ops';      
@@ -183,7 +248,7 @@ echo <<<END
 </html>
 
 END;
-    
+ 
 }
 
 function checkConfig ($config, $groups=false)

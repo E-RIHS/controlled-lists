@@ -33,38 +33,38 @@ function generateGroupHTML(group) {
     html += '<div>';
 
     // Info
-    html += '<a href="' + group.links.view[0] + '" class="text-decoration-none mr-2">';
+    html += '<a href="' + group.links.view[0] + '" class="text-decoration-none me-2">';
     html += '<i class="fas ' + options.view.icon + ' lead" title="View Group Diagram" style="color: ' + options.view.colour + ';"></i></a>';
     
     html += '&nbsp;-&nbsp;&nbsp;';
     
     // Info
-    html += '<a href="' + group.links.info[0] + '" class="text-decoration-none mr-2">';
+    html += '<a href="' + group.links.info[0] + '" class="text-decoration-none me-2">';
     html += '<i class="fas ' + options.info.icon + ' lead" title="Group Information" style="color: ' + options.info.colour + ';"></i></a>';
     
     html += '&nbsp;-&nbsp;&nbsp;';
     
     // Default
-    html += '<a href="' + group.links.default[0] + '" class="text-decoration-none mr-2">';
+    html += '<a href="' + group.links.default[0] + '" class="text-decoration-none me-2">';
     html += '<i class="fas ' + options.default.icon + ' lead" title="Default" style="color: ' + options.default.colour + ';"></i></a>';
 
     // Simple    
-    html += '<a href="' + group.links.simple[0] + '" class="text-decoration-none mr-2">';
+    html += '<a href="' + group.links.simple[0] + '" class="text-decoration-none me-2">';
     html += '<i class="fas ' + options.simple.icon + ' lead" title="Simple" style="color: ' + options.simple.colour + ';"></i></a>';
 
     // Full
-    html += '<a href="' + group.links.full[0] + '" class="text-decoration-none mr-2">';
+    html += '<a href="' + group.links.full[0] + '" class="text-decoration-none me-2">';
     html += '<i class="fas ' + options.full.icon + ' lead" title="Full" style="color: ' + options.full.colour + ';"></i></a>';
 
     html += '&nbsp;-&nbsp;&nbsp;';
     
-    html += '<a href="' + group.links.default[1] + '" class="text-decoration-none mr-2">';
+    html += '<a href="' + group.links.default[1] + '" class="text-decoration-none me-2">';
     html += '<i class="fas ' + options.refresh.icon + ' lead" title="Refresh and display Default" style="color: ' + options.default.colour + ';"></i></a>';
     
-    html += '<a href="' + group.links.simple[1] + '" class="text-decoration-none mr-2">';
+    html += '<a href="' + group.links.simple[1] + '" class="text-decoration-none me-2">';
     html += '<i class="fas ' + options.refresh.icon + ' lead" title="Refresh and display Simple" style="color: ' + options.simple.colour + ';"></i></a>';
     
-    html += '<a href="' + group.links.full[1] + '" class="text-decoration-none mr-2">';
+    html += '<a href="' + group.links.full[1] + '" class="text-decoration-none me-2">';
     html += '<i class="fas ' + options.refresh.icon + ' lead" title="Refresh and display Full" style="color: ' + options.full.colour + ';"></i></a>';
 
     html += '</div></div></div>';
