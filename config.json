@@ -9,236 +9,266 @@
     "vocabulary-link": "https://vocab.e-rihs.io/",
     "vocabulary-label": "E-RIHS Vocabulary Server",
     "options": {
-        "group": [],
-        "refresh": {
-            "icon": "fa-sync"
-        },
-        "view": {
-            "icon": "fa-eye",
-            "colour": "lightgray"
-        },
-        "info": {
-            "icon": "fa-info",
-            "colour": "black"
-        },
-        "default": {
-            "icon": "fa-layer-group",
-            "colour": "gray"
-        },
-        "simple": {
-            "icon": "fa-layer-group",
-            "colour": "blue"
-        },
-        "full": {
-            "icon": "fa-layer-group",
-            "colour": "darkred"
-        }
+      "group": [],
+      "refresh": {
+        "icon": "fa-sync"
+      },
+      "view": {
+        "icon": "fa-eye",
+        "colour": "lightgray"
+      },
+      "info": {
+        "icon": "fa-info",
+        "colour": "black"
+      },
+      "default": {
+        "icon": "fa-layer-group",
+        "colour": "gray"
+      },
+      "simple": {
+        "icon": "fa-layer-group",
+        "colour": "blue"
+      },
+      "full": {
+        "icon": "fa-layer-group",
+        "colour": "darkred"
+      }
     },
     "tool-handle": "https://hdl.handle.net/21.11158/0003-a375-bce0-4571",
     "group-handles": {
-        "g51": {
-            "id": "g51",
-            "label": "Acquisition Area",
-            "handle": "https://hdl.handle.net/21.11158/0002-389e-a0cd-0640",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g51"
-        },
-        "g53": {
-            "id": "g53",
-            "label": "Component Type",
-            "handle": "https://hdl.handle.net/21.11158/0002-7253-5fd9-8cb8",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g53"
-        },
-        "g56": {
-            "id": "g56",
-            "label": "Connected Via",
-            "handle": "https://hdl.handle.net/21.11158/0002-a6d1-7adb-8dd8",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g56"
-        },
-        "g42": {
-            "id": "g42",
-            "label": "Country",
-            "handle": "https://hdl.handle.net/21.11158/0002-a36b-9f90-6c16",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g42"
-        },
-        "g48": {
-            "id": "g48",
-            "label": "Data Type",
-            "handle": "https://hdl.handle.net/21.11158/0002-26d8-bbc2-fbb1",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g48"
-        },
-        "g16": {
-            "id": "g16",
-            "label": "E-RIHS National Nodes",
-            "handle": "https://hdl.handle.net/21.11158/0002-3a0e-74f5-d9a3",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g16"
-        },
-        "g7": {
-            "id": "g7",
-            "label": "E-RIHS Platform",
-            "handle": "https://hdl.handle.net/21.11158/0002-ed43-cd61-6077",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g7"
-        },
-        "g47": {
-            "id": "g47",
-            "label": "Equipment Component Type",
-            "handle": "https://hdl.handle.net/21.11158/0002-9e36-d532-ac26",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g47"
-        },
-        "g44": {
-            "id": "g44",
-            "label": "Licence Type",
-            "handle": "https://hdl.handle.net/21.11158/0002-54a0-269d-b071",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g44"
-        },
-        "g11": {
-            "id": "g11",
-            "label": "Link Type",
-            "handle": "https://hdl.handle.net/21.11158/0002-4d1e-b06a-2d2f",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g11"
-        },
-        "g35": {
-            "id": "g35",
-            "label": "Material",
-            "handle": "https://hdl.handle.net/21.11158/0002-8925-0082-c469",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g35"
-        },
-        "g40": {
-            "id": "g40",
-            "label": "Measurable Property",
-            "handle": "https://hdl.handle.net/21.11158/0002-89df-b691-9b7a",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g40"
-        },
-        "g18": {
-            "id": "g18",
-            "label": "Object Impact",
-            "handle": "https://hdl.handle.net/21.11158/0002-01b9-7576-87de",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g18"
-        },
-        "g8": {
-            "id": "g8",
-            "label": "Offered to",
-            "handle": "https://hdl.handle.net/21.11158/0002-8d19-3829-ba66",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g8"
-        },
-        "g13": {
-            "id": "g13",
-            "label": "Operating Language",
-            "handle": "https://hdl.handle.net/21.11158/0002-9d99-a2b3-f273",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g13"
-        },
-        "g45": {
-            "id": "g45",
-            "label": "Organisation Type",
-            "handle": "https://hdl.handle.net/21.11158/0002-e5a2-1fbd-dc53",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g45"
-        },
-        "g50": {
-            "id": "g50",
-            "label": "Other Terms",
-            "handle": "https://hdl.handle.net/21.11158/0002-f909-4276-6fee",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g50"
-        },
-        "g46": {
-            "id": "g46",
-            "label": "Parameter Type",
-            "handle": "https://hdl.handle.net/21.11158/0002-c5b7-844b-90a8",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g46"
-        },
-        "g52": {
-            "id": "g52",
-            "label": "Parameter Unit",
-            "handle": "https://hdl.handle.net/21.11158/0002-8d5b-ecd3-0785",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g52"
-        },
-        "g14": {
-            "id": "g14",
-            "label": "Period Class",
-            "handle": "https://hdl.handle.net/21.11158/0002-6012-dca7-fa87",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g14"
-        },
-        "g12": {
-            "id": "g12",
-            "label": "Period Unit",
-            "handle": "https://hdl.handle.net/21.11158/0002-adf6-e851-5b95",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g12"
-        },
-        "g21": {
-            "id": "g21",
-            "label": "Persistent Identifier",
-            "handle": "https://hdl.handle.net/21.11158/0002-9004-659c-14c6",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g21"
-        },
-        "g9": {
-            "id": "g9",
-            "label": "Person Role",
-            "handle": "https://hdl.handle.net/21.11158/0002-5445-97e8-1fec",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g9"
-        },
-        "g20": {
-            "id": "g20",
-            "label": "Personal Title",
-            "handle": "https://hdl.handle.net/21.11158/0002-713f-ec5d-7351",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g20"
-        },
-        "g55": {
-            "id": "g55",
-            "label": "Project Class",
-            "handle": "https://hdl.handle.net/21.11158/0002-da49-f6f6-106b",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g55"
-        },
-        "g15": {
-            "id": "g15",
-            "label": "Provider Role",
-            "handle": "https://hdl.handle.net/21.11158/0002-1807-911b-45dc",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g15"
-        },
-        "g5": {
-            "id": "g5",
-            "label": "Readiness Level",
-            "handle": "https://hdl.handle.net/21.11158/0002-d3b8-10c6-92ba",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g5"
-        },
-        "g19": {
-            "id": "g19",
-            "label": "Reference Role",
-            "handle": "https://hdl.handle.net/21.11158/0002-6d5e-fd08-6b9b",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g19"
-        },
-        "g10": {
-            "id": "g10",
-            "label": "Research Discipline",
-            "handle": "https://hdl.handle.net/21.11158/0002-9dc3-7d05-b211",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g10"
-        },
-        "g49": {
-            "id": "g49",
-            "label": "Software Type",
-            "handle": "https://hdl.handle.net/21.11158/0002-e206-8155-4ff4",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g49"
-        },
-        "g6": {
-            "id": "g6",
-            "label": "Support Type",
-            "handle": "https://hdl.handle.net/21.11158/0002-50a6-7b38-0ae0",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g6"
-        },
-        "g22": {
-            "id": "g22",
-            "label": "Technique",
-            "handle": "https://hdl.handle.net/21.11158/0002-d6f1-f86f-d248",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g22"
-        },
-        "g41": {
-            "id": "g41",
-            "label": "Tool Role",
-            "handle": "https://hdl.handle.net/21.11158/0002-f4d8-dcf2-4a06",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g41"
-        },
-        "g17": {
-            "id": "g17",
-            "label": "Working Distance",
-            "handle": "https://hdl.handle.net/21.11158/0002-b867-f3d1-b5bd",
-            "url": "https://research.ng-london.org.uk/ecls/?group=g17"
-        }
+      "g51": {
+        "id": "g51",
+        "label": "Acquisition Area",
+        "handle": "https://hdl.handle.net/21.11158/0002-389e-a0cd-0640",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g51"
+      },
+      "g53": {
+        "id": "g53",
+        "label": "Component Type",
+        "handle": "https://hdl.handle.net/21.11158/0002-7253-5fd9-8cb8",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g53"
+      },
+      "g56": {
+        "id": "g56",
+        "label": "Connected Via",
+        "handle": "https://hdl.handle.net/21.11158/0002-a6d1-7adb-8dd8",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g56"
+      },
+      "g57": {
+        "id": "g57",
+        "label": "Contact Options",
+        "handle": "https://hdl.handle.net/21.11158/0002-43e7-6f56-afac",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g57"
+      },
+      "g42": {
+        "id": "g42",
+        "label": "Country",
+        "handle": "https://hdl.handle.net/21.11158/0002-a36b-9f90-6c16",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g42"
+      },
+      "g48": {
+        "id": "g48",
+        "label": "Data Type",
+        "handle": "https://hdl.handle.net/21.11158/0002-26d8-bbc2-fbb1",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g48"
+      },
+      "g16": {
+        "id": "g16",
+        "label": "E-RIHS National Nodes",
+        "handle": "https://hdl.handle.net/21.11158/0002-3a0e-74f5-d9a3",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g16"
+      },
+      "g7": {
+        "id": "g7",
+        "label": "E-RIHS Platform",
+        "handle": "https://hdl.handle.net/21.11158/0002-ed43-cd61-6077",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g7"
+      },
+      "g47": {
+        "id": "g47",
+        "label": "Equipment Component Type",
+        "handle": "https://hdl.handle.net/21.11158/0002-9e36-d532-ac26",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g47"
+      },
+      "g44": {
+        "id": "g44",
+        "label": "Licence Type",
+        "handle": "https://hdl.handle.net/21.11158/0002-54a0-269d-b071",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g44"
+      },
+      "g11": {
+        "id": "g11",
+        "label": "Link Type",
+        "handle": "https://hdl.handle.net/21.11158/0002-4d1e-b06a-2d2f",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g11"
+      },
+      "g35": {
+        "id": "g35",
+        "label": "Material",
+        "handle": "https://hdl.handle.net/21.11158/0002-8925-0082-c469",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g35"
+      },
+      "g40": {
+        "id": "g40",
+        "label": "Measurable Property",
+        "handle": "https://hdl.handle.net/21.11158/0002-89df-b691-9b7a",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g40"
+      },
+      "g18": {
+        "id": "g18",
+        "label": "Object Impact",
+        "handle": "https://hdl.handle.net/21.11158/0002-01b9-7576-87de",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g18"
+      },
+      "g8": {
+        "id": "g8",
+        "label": "Offered to",
+        "handle": "https://hdl.handle.net/21.11158/0002-8d19-3829-ba66",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g8"
+      },
+      "g13": {
+        "id": "g13",
+        "label": "Operating Language",
+        "handle": "https://hdl.handle.net/21.11158/0002-9d99-a2b3-f273",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g13"
+      },
+      "g45": {
+        "id": "g45",
+        "label": "Organisation Type",
+        "handle": "https://hdl.handle.net/21.11158/0002-e5a2-1fbd-dc53",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g45"
+      },
+      "g50": {
+        "id": "g50",
+        "label": "Other Terms",
+        "handle": "https://hdl.handle.net/21.11158/0002-f909-4276-6fee",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g50"
+      },
+      "g46": {
+        "id": "g46",
+        "label": "Parameter Type",
+        "handle": "https://hdl.handle.net/21.11158/0002-c5b7-844b-90a8",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g46"
+      },
+      "g52": {
+        "id": "g52",
+        "label": "Parameter Unit",
+        "handle": "https://hdl.handle.net/21.11158/0002-8d5b-ecd3-0785",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g52"
+      },
+      "g14": {
+        "id": "g14",
+        "label": "Period Class",
+        "handle": "https://hdl.handle.net/21.11158/0002-6012-dca7-fa87",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g14"
+      },
+      "g12": {
+        "id": "g12",
+        "label": "Period Unit",
+        "handle": "https://hdl.handle.net/21.11158/0002-adf6-e851-5b95",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g12"
+      },
+      "g58": {
+        "id": "g58",
+        "label": "Permission Status",
+        "handle": "https://hdl.handle.net/21.11158/0002-fc99-bda9-c1f0",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g58"
+      },
+      "g21": {
+        "id": "g21",
+        "label": "Persistent Identifier",
+        "handle": "https://hdl.handle.net/21.11158/0002-9004-659c-14c6",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g21"
+      },
+      "g9": {
+        "id": "g9",
+        "label": "Person Role",
+        "handle": "https://hdl.handle.net/21.11158/0002-5445-97e8-1fec",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g9"
+      },
+      "g20": {
+        "id": "g20",
+        "label": "Personal Title",
+        "handle": "https://hdl.handle.net/21.11158/0002-713f-ec5d-7351",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g20"
+      },
+      "g55": {
+        "id": "g55",
+        "label": "Project Class",
+        "handle": "https://hdl.handle.net/21.11158/0002-da49-f6f6-106b",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g55"
+      },
+      "g60": {
+        "id": "g60",
+        "label": "Proposal Status",
+        "handle": "https://hdl.handle.net/21.11158/0002-1bb6-38ad-1a2a",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g60"
+      },
+      "g15": {
+        "id": "g15",
+        "label": "Provider Role",
+        "handle": "https://hdl.handle.net/21.11158/0002-1807-911b-45dc",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g15"
+      },
+      "g5": {
+        "id": "g5",
+        "label": "Readiness Level",
+        "handle": "https://hdl.handle.net/21.11158/0002-d3b8-10c6-92ba",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g5"
+      },
+      "g19": {
+        "id": "g19",
+        "label": "Reference Role",
+        "handle": "https://hdl.handle.net/21.11158/0002-6d5e-fd08-6b9b",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g19"
+      },
+      "g10": {
+        "id": "g10",
+        "label": "Research Discipline",
+        "handle": "https://hdl.handle.net/21.11158/0002-9dc3-7d05-b211",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g10"
+      },
+      "g61": {
+        "id": "g61",
+        "label": "Review Status",
+        "handle": "https://hdl.handle.net/21.11158/0002-23d1-70fe-e809",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g61"
+      },
+      "g59": {
+        "id": "g59",
+        "label": "Societal Challenges",
+        "handle": "https://hdl.handle.net/21.11158/0002-abcd-e336-352a",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g59"
+      },
+      "g49": {
+        "id": "g49",
+        "label": "Software Type",
+        "handle": "https://hdl.handle.net/21.11158/0002-e206-8155-4ff4",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g49"
+      },
+      "g6": {
+        "id": "g6",
+        "label": "Support Type",
+        "handle": "https://hdl.handle.net/21.11158/0002-50a6-7b38-0ae0",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g6"
+      },
+      "g22": {
+        "id": "g22",
+        "label": "Technique",
+        "handle": "https://hdl.handle.net/21.11158/0002-d6f1-f86f-d248",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g22"
+      },
+      "g41": {
+        "id": "g41",
+        "label": "Tool Role",
+        "handle": "https://hdl.handle.net/21.11158/0002-f4d8-dcf2-4a06",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g41"
+      },
+      "g17": {
+        "id": "g17",
+        "label": "Working Distance",
+        "handle": "https://hdl.handle.net/21.11158/0002-b867-f3d1-b5bd",
+        "url": "https://research.ng-london.org.uk/ecls/?group=g17"
+      }
     }
-}
+  }
